@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_HEADER",
+    "payload": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_PAYLOAD",
+    "signature": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_SIGNATURE"
+  },
+  "frame": {
+    "name": "Self Bingo",
+    "version": "1",
+    "iconUrl": "https://your-domain.com/self-bingo-icon.png",
+    "homeUrl": "https://your-domain.com",
+    "imageUrl": "https://your-domain.com/self-bingo-preview.png",
+    "buttonTitle": "Play Self Bingo",
+    "splashImageUrl": "https://your-domain.com/self-bingo-splash.png",
+    "splashBackgroundColor": "#FCFF52",
+    "webhookUrl": "https://your-domain.com/api/webhook"
+  }
+}
