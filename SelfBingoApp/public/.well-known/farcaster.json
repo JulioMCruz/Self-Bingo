@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_HEADER",
-    "payload": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_PAYLOAD",
-    "signature": "UPDATE_WITH_YOUR_ACCOUNT_ASSOCIATION_SIGNATURE"
+    "header": "eyJmaWQiOjIxMDY3MSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDAxMUM1RjM3N2M2OTY4ZjhDOGNGODZmY0Y3OEYxMUFhOTgyMmJFOEYifQ",
+    "payload": "eyJkb21haW4iOiJ3d3cuc2VsZmJpbmdvLnh5eiJ9",
+    "signature": "WPT1s3oKHeaCUOb4bKSbnSIgeN6HG6U89rqEfAt3yT92WMH20SoLGslbudLqIXrejI9qogH6w4Q+ad8ruwUsRRs="
   },
   "frame": {
     "name": "Self Bingo",
