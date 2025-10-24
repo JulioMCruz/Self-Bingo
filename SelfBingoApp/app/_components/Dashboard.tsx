@@ -1,7 +1,10 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import PrizePoolHero from "@/components/PrizePoolHero";
 import StatsGrid from "@/components/StatsGrid";
 import selfBingoLogo from "@assets/image_1761342849783.png";
+import { useAccount } from "wagmi";
 
 interface DashboardProps {
   prizePool: number;
@@ -20,6 +23,8 @@ export default function Dashboard({
   roundNumber,
   onJoinGame 
 }: DashboardProps) {
+  const { isConnected } = useAccount();
+
   return (
     <div className="min-h-screen pb-8">
       <div className="space-y-6 p-4">
@@ -56,7 +61,7 @@ export default function Dashboard({
           <ol className="space-y-3 text-sm">
             <li className="flex gap-3">
               <span className="font-black">1.</span>
-              <span>Pay 1 CELO entry fee to get your bingo card</span>
+              <span>Pay 0.01 USDC entry fee to get your bingo card</span>
             </li>
             <li className="flex gap-3">
               <span className="font-black">2.</span>
@@ -73,12 +78,13 @@ export default function Dashboard({
           </ol>
         </div>
 
-        <Button 
+        <Button
           className="w-full h-14 text-base font-black uppercase border-2 border-black"
           onClick={onJoinGame}
+          disabled={!isConnected}
           data-testid="button-join-game"
         >
-          Join Game - 1 USDC
+          {isConnected ? 'Join Game - 0.01 USDC' : 'Connect Wallet to Play'}
         </Button>
       </div>
     </div>
