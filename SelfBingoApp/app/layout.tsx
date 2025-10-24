@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SdkInitializer } from "@/components/SdkInitializer";
 import { FarcasterProvider } from "@/contexts/FarcasterContext";
+import { WagmiConfig } from "@/providers/wagmi-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,13 +40,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased`}>
-        <FarcasterProvider>
-          <SdkInitializer />
-          <TooltipProvider>
-            {children}
-            <Toaster />
-          </TooltipProvider>
-        </FarcasterProvider>
+        <WagmiConfig>
+          <FarcasterProvider>
+            <SdkInitializer />
+            <TooltipProvider>
+              {children}
+              <Toaster />
+            </TooltipProvider>
+          </FarcasterProvider>
+        </WagmiConfig>
       </body>
     </html>
   );
