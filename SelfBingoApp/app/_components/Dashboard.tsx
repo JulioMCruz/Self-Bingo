@@ -5,6 +5,7 @@ import PrizePoolHero from "@/components/PrizePoolHero";
 import StatsGrid from "@/components/StatsGrid";
 import selfBingoLogo from "@assets/image_1761342849783.png";
 import { useAccount } from "wagmi";
+import { useState, useEffect } from "react";
 
 interface DashboardProps {
   prizePool: number;
@@ -15,15 +16,20 @@ interface DashboardProps {
   onJoinGame: () => void;
 }
 
-export default function Dashboard({ 
-  prizePool, 
-  participantCount, 
-  activeGames, 
-  totalWinners, 
+export default function Dashboard({
+  prizePool,
+  participantCount,
+  activeGames,
+  totalWinners,
   roundNumber,
-  onJoinGame 
+  onJoinGame
 }: DashboardProps) {
   const { isConnected } = useAccount();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="min-h-screen pb-8">
@@ -81,10 +87,10 @@ export default function Dashboard({
         <Button
           className="w-full h-14 text-base font-black uppercase border-2 border-black"
           onClick={onJoinGame}
-          disabled={!isConnected}
+          disabled={!mounted || !isConnected}
           data-testid="button-join-game"
         >
-          {isConnected ? 'Join Game - 0.01 USDC' : 'Connect Wallet to Play'}
+          {!mounted ? 'Loading...' : isConnected ? 'Join Game - 0.01 USDC' : 'Connect Wallet to Play'}
         </Button>
       </div>
     </div>
