@@ -61,28 +61,32 @@ export default function PaymentScreen({ entryFee, onPayment }: PaymentScreenProp
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
-        <div className="bg-card p-8 border-4 border-black space-y-6">
-          <div className="text-center space-y-2">
-            <h2 className="text-4xl font-thin tracking-tight">
-              Enter the Game
-            </h2>
-            <p className="text-sm uppercase font-black tracking-wide">
-              Pay {entryFee} USDC to play
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+      <div className="w-full max-w-3xl">
+        {/* Header Section */}
+        <div className="text-center mb-8 space-y-3">
+          <h1 className="text-5xl md:text-6xl font-thin tracking-tight">
+            Enter the Game
+          </h1>
+          <p className="text-base uppercase font-black tracking-wide text-muted-foreground">
+            Pay {entryFee} USDC to play
+          </p>
+        </div>
+
+        {/* Main Card */}
+        <div className="bg-card p-6 md:p-10 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          {/* Entry Fee Display */}
+          <div className="bg-primary p-8 border-4 border-black text-center mb-8">
+            <p className="text-xs font-black uppercase tracking-wider mb-3 opacity-80">ENTRY FEE</p>
+            <p className="text-6xl md:text-7xl font-thin mb-2">
+              {entryFee}
             </p>
+            <p className="text-2xl font-black uppercase tracking-wide mb-3">USDC</p>
+            <p className="text-xs uppercase font-bold tracking-wider opacity-70">on Celo Mainnet</p>
           </div>
 
-          <div className="bg-primary p-6 border-2 border-black text-center">
-            <p className="text-xs font-black uppercase mb-2">ENTRY FEE</p>
-            <p className="text-5xl font-thin">
-              {entryFee} <span className="text-2xl font-black">USDC</span>
-            </p>
-            <p className="text-xs mt-2 uppercase font-bold">on Celo Mainnet</p>
-          </div>
-
-          {/* Selfx402 Payment Widget */}
-          <div className="space-y-4">
+          {/* Payment Widget */}
+          <div className="mb-6">
             <PaymentFormMinimal
               vendorUrl={vendorUrl}
               apiEndpoint={apiEndpoint}
@@ -96,8 +100,18 @@ export default function PaymentScreen({ entryFee, onPayment }: PaymentScreenProp
             />
           </div>
 
-          <p className="text-xs text-center uppercase font-bold">
-            Winners split the prize pool when they complete 5-in-a-row
+          {/* Footer Info */}
+          <div className="border-t-2 border-black pt-6 mt-6">
+            <p className="text-xs text-center uppercase font-bold tracking-wide text-muted-foreground">
+              Winners split the prize pool when they complete 5-in-a-row
+            </p>
+          </div>
+        </div>
+
+        {/* Additional Info */}
+        <div className="mt-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            Powered by Self Protocol × x402 Micropayments
           </p>
         </div>
       </div>
