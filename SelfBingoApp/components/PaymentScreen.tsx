@@ -49,8 +49,9 @@ export default function PaymentScreen({ entryFee, onPayment }: PaymentScreenProp
     console.log("[Self Bingo] Payment successful!", data)
     console.log("[Self Bingo] Transaction Hash:", data.txHash)
     console.log("[Self Bingo] Amount Paid:", data.amount, "USDC")
+    console.log("[Self Bingo] API Response:", data.apiResponse)
 
-    // Trigger game start
+    // Trigger game start immediately after payment success
     onPayment()
   }
 
@@ -96,7 +97,7 @@ export default function PaymentScreen({ entryFee, onPayment }: PaymentScreenProp
               showDeepLink="both"
               wagmiConfig={wagmiConfigProp}
               buttonText="Pay & Start Playing"
-              successCallbackDelay={2000}
+              successCallbackDelay={500}
             />
           </div>
 
