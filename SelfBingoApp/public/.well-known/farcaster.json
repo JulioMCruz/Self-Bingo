@@ -7,12 +7,12 @@
   "frame": {
     "name": "Self Bingo",
     "version": "1",
-    "iconUrl": "https://codalabs.ngrok.io/self-bingo-icon.png",
-    "homeUrl": "https://codalabs.ngrok.io",
-    "imageUrl": "https://codalabs.ngrok.io/self-bingo-preview.png",
+    "iconUrl": "https://www.selfbingo.xyz/self-bingo-icon.png",
+    "homeUrl": "https://www.selfbingo.xyz",
+    "imageUrl": "https://www.selfbingo.xyz/self-bingo-preview.png",
     "buttonTitle": "Play Self Bingo",
-    "splashImageUrl": "https://codalabs.ngrok.io/self-bingo-splash.png",
+    "splashImageUrl": "https://www.selfbingo.xyz/self-bingo-splash.png",
     "splashBackgroundColor": "#FCFF52",
-    "webhookUrl": "https://codalabs.ngrok.io/api/webhook"
+    "webhookUrl": "https://www.selfbingo.xyz/api/webhook"
   }
 }

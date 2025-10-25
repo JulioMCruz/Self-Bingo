@@ -16,15 +16,15 @@ export const metadata: Metadata = {
   other: {
     'fc:frame': JSON.stringify({
       version: "next",
-      imageUrl: "https://codalabs.ngrok.io/self-bingo-preview.png",
+      imageUrl: "https://www.selfbingo.xyz/self-bingo-preview.png",
       aspectRatio: "3:2",
       button: {
         title: "Play Self Bingo",
         action: {
           type: "launch_frame",
           name: "Self Bingo",
-          url: "https://codalabs.ngrok.io",
-          splashImageUrl: "https://codalabs.ngrok.io/self-bingo-splash.png",
+          url: "https://www.selfbingo.xyz",
+          splashImageUrl: "https://www.selfbingo.xyz/self-bingo-splash.png",
           splashBackgroundColor: "#FCFF52"
         }
       }

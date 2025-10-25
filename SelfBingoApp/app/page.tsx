@@ -151,7 +151,7 @@ export default function Home() {
 
       {appState === 'payment' && (
         <PaymentScreen
-          entryFee={1}
+          entryFee={0.01}
           walletConnected={walletConnected}
           onConnectWallet={handleConnectWallet}
           onPayment={handlePayment}
