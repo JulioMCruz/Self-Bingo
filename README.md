@@ -4,11 +4,12 @@ A decentralized bingo game powered by Self Protocol verification on Celo blockch
 
 ## 🎮 Features
 
-- **Self Protocol Integration**: Verify your identity using Self Protocol's decentralized verification
-- **Blockchain-Powered**: Built on Celo mainnet with USDC payments (0.01 USDC entry fee)
-- **Farcaster Native**: Works seamlessly as a Farcaster mini app with auto-wallet connection
-- **Multi-Platform**: Play in any browser or inside Farcaster
-- **Real-time Gameplay**: Live bingo card generation and verification
+- **Self Protocol Integration**: Age verification (18+) using Self Protocol's zero-knowledge proofs with backend verification
+- **Blockchain-Powered**: Built on Celo Sepolia testnet with native CELO payments (0.05 CELO entry fee)
+- **Smart Contract**: Upgradeable game contracts with factory pattern for multiple rounds
+- **Farcaster Native**: Works seamlessly as a Farcaster mini app with auto-wallet connection and environment detection
+- **Multi-Platform**: Play in any browser or inside Farcaster with adaptive UI
+- **Real-time Gameplay**: Live bingo card generation and Self Protocol verification with polling
 
 ## 🛠️ Tech Stack
 
@@ -17,11 +18,22 @@ A decentralized bingo game powered by Self Protocol verification on Celo blockch
 - **Blockchain**:
   - Wagmi v2 for wallet connections
   - Viem for blockchain interactions
-  - Celo mainnet (Chain ID: 42220)
-  - USDC token (0xcebA9300f2b948710d2653dD7B07f33A8B32118C)
+  - Celo Sepolia testnet (Chain ID: 11142220)
+  - Native CELO payments (0.05 CELO entry fee)
+  - Upgradeable smart contracts (UUPS proxy pattern)
+- **Smart Contracts** (Solidity 0.8.22):
+  - BingoGameFactory: 0x024baF02baB39f783D2b86A6fEF9A6492bBC0250
+  - Deployed on Celo Sepolia testnet
+  - [View on Celoscan](https://sepolia.celoscan.io/address/0x024baF02baB39f783D2b86A6fEF9A6492bBC0250)
+- **Self Protocol**:
+  - @selfxyz/qrcode for QR code generation
+  - @selfxyz/core for backend verification
+  - Age verification (18+) with zero-knowledge proofs
+  - Backend verification endpoint with caching
 - **Farcaster**:
   - @farcaster/miniapp-sdk v0.2.1
   - @farcaster/miniapp-wagmi-connector v1.1.0
+  - Environment detection and adaptive UI
 - **State Management**: @tanstack/react-query
 - **Wallet Support**:
   - Farcaster mini app connector (auto-connect)
@@ -34,61 +46,74 @@ A decentralized bingo game powered by Self Protocol verification on Celo blockch
 
 - Node.js 18+
 - npm or yarn
-- A Celo-compatible wallet (for testing)
+- A Celo-compatible wallet (MetaMask recommended)
+- Self Protocol mobile app (for age verification)
+- Ngrok account (for local Self Protocol testing)
 
 ### Installation
 
 1. Clone the repository:
-```bash
+\`\`\`bash
 git clone https://github.com/yourusername/Self-Bingo.git
 cd Self-Bingo/SelfBingoApp
-```
+\`\`\`
 
 2. Install dependencies:
-```bash
+\`\`\`bash
 npm install
-```
+\`\`\`
 
 3. Configure environment variables:
-```bash
+\`\`\`bash
 cp .env.example .env.local
-```
+\`\`\`
 
-Edit `.env.local` with your configuration:
-```bash
+Edit \`.env.local\` with your configuration:
+\`\`\`bash
 # Site Configuration
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_IMAGE_URL=http://localhost:3000/self-bingo-preview.png
-NEXT_PUBLIC_SPLASH_IMAGE_URL=http://localhost:3000/self-bingo-splash.png
+NEXT_PUBLIC_SITE_URL=http://localhost:3001
+NEXT_PUBLIC_IMAGE_URL=http://localhost:3001/self-bingo-preview.png
+NEXT_PUBLIC_SPLASH_IMAGE_URL=http://localhost:3001/self-bingo-splash.png
 
-# Blockchain Configuration (Celo Mainnet)
-NEXT_PUBLIC_CHAIN_ID=42220
-NEXT_PUBLIC_USDC_ENTRY_FEE=0.01
-NEXT_PUBLIC_USDC_CONTRACT_ADDRESS=0xcebA9300f2b948710d2653dD7B07f33A8B32118C
+# Blockchain Configuration (Celo Sepolia Testnet)
+NEXT_PUBLIC_CHAIN_ID=11142220
+NEXT_PUBLIC_RPC_URL=https://celo-sepolia-rpc.publicnode.com
+NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS=0x024baF02baB39f783D2b86A6fEF9A6492bBC0250
+NEXT_PUBLIC_ENTRY_FEE_CELO=0.05
+NEXT_PUBLIC_MIN_PLAYERS=2
+NEXT_PUBLIC_MAX_PLAYERS=100
 
-# Self Protocol API
-NEXT_PUBLIC_SELF_API_URL=https://api.selfprotocol.com
+# Self Protocol Configuration
+NEXT_PUBLIC_SELF_APP_NAME=Self Bingo
+NEXT_PUBLIC_SELF_SCOPE=self-bingo
+NEXT_PUBLIC_SELF_ENDPOINT=https://codalabs.ngrok.io/api/verify-self
+NEXT_PUBLIC_SELF_USE_MOCK=false
 
 # WalletConnect
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here
 
-# Optional: OpenAI for future features
+# Optional: OpenAI for AI-generated questions
 OPENAI_API_KEY=your_openai_api_key
-```
+\`\`\`
 
-4. Run the development server:
-```bash
+4. Start ngrok tunnel (for Self Protocol verification):
+\`\`\`bash
+ngrok http 3001 --domain codalabs.ngrok.io
+\`\`\`
+
+5. Run the development server:
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3001](http://localhost:3001) in your browser.
 
 ### Build for Production
 
-```bash
+\`\`\`bash
 npm run build
 npm start
-```
+\`\`\`
 
 ## 🎯 How to Play
 
@@ -96,127 +121,66 @@ npm start
    - In Farcaster mini app: Auto-connects your Farcaster wallet
    - In browser: Choose your preferred wallet provider
 
-2. **Join Game**: Click "Join Game - 0.01 USDC" to enter
-   - Requires 0.01 USDC on Celo mainnet
-   - Wallet automatically switches to Celo network if needed
+2. **Age Verification**: Complete Self Protocol age verification (18+)
+   - **In Browser**: Scan QR code with Self mobile app
+   - **In Farcaster**: Click "Verify with Self" or copy deep link
+   - Zero-knowledge proof ensures privacy
+   - Verification stored in session cache
+   - Polling mechanism automatically detects completion
 
-3. **Get Your Card**: Receive a randomly generated bingo card
+3. **Join Game**: Click "Pay & Start Playing" after verification
+   - Requires 0.05 CELO on Celo Sepolia testnet
+   - Automatically creates game contract if none exists
+   - Joins game with CELO payment transaction
+   - Wallet automatically switches to Celo Sepolia if needed
 
-4. **Play**: Mark off numbers as they're called
+4. **Get Your Card**: Receive a randomly generated 5×5 bingo card
 
-5. **Win**: First to complete a line wins the prize pool!
+5. **Verify Cells**: Use Self Protocol to verify bingo square answers
+   - Each verification is recorded on-chain
+   - Track your progress in real-time
 
-## 📁 Project Structure
+6. **Win**: First to complete a row, column, or diagonal wins the prize pool!
 
-```
-SelfBingoApp/
-├── app/                          # Next.js App Router
-│   ├── _components/              # Page-specific components
-│   │   ├── Dashboard.tsx         # Main game dashboard
-│   │   └── TopBar.tsx           # Top navigation bar
-│   ├── layout.tsx               # Root layout with providers
-│   └── page.tsx                 # Home page
-├── components/                   # Shared UI components
-│   ├── ui/                      # shadcn/ui components
-│   ├── BingoCard.tsx            # Bingo card display
-│   ├── ConnectMenu.tsx          # Wallet connection UI
-│   └── SdkInitializer.tsx       # Farcaster SDK init
-├── contexts/                     # React contexts
-│   └── FarcasterContext.tsx     # Farcaster user state
-├── hooks/                        # Custom React hooks
-│   └── use-toast.ts             # Toast notifications
-├── lib/                          # Utility functions
-│   ├── utils.ts                 # Helper functions
-│   └── wagmi.ts                 # Wagmi configuration
-├── providers/                    # Provider wrappers
-│   └── wagmi-provider.tsx       # Wagmi + React Query
-└── public/
-    └── .well-known/
-        └── farcaster.json       # Farcaster manifest
-```
+## ✅ Recent Updates
 
-## 🔧 Configuration Files
+### Self Protocol Integration (Completed)
+- ✅ QR code verification with @selfxyz/qrcode
+- ✅ Backend verification endpoint at \`/api/verify-self\`
+- ✅ Age verification (18+) with zero-knowledge proofs
+- ✅ Global verification cache for session persistence
+- ✅ Inline verification flow on payment screen
+- ✅ Polling mechanism for verification status updates
 
-### Farcaster Mini App Manifest
+### Farcaster Mini App Support (Completed)
+- ✅ Environment detection (browser vs Farcaster)
+- ✅ Conditional QR code display (browser only)
+- ✅ Deep link buttons for Farcaster environment
+- ✅ Auto-wallet connection in Farcaster
+- ✅ Copy link functionality with toast notifications
 
-The app includes a Farcaster manifest at `public/.well-known/farcaster.json`:
+### Payment Flow Fixes (Completed)
+- ✅ Fixed race condition in game creation
+- ✅ \`ensureGameExists()\` now returns game address directly
+- ✅ Proper state synchronization before payment
+- ✅ Enhanced error handling and logging
 
-```json
-{
-  "frame": {
-    "name": "Self Bingo",
-    "version": "1",
-    "iconUrl": "https://www.selfbingo.xyz/self-bingo-icon.png",
-    "homeUrl": "https://www.selfbingo.xyz",
-    "imageUrl": "https://www.selfbingo.xyz/self-bingo-preview.png",
-    "buttonTitle": "Play Self Bingo",
-    "splashImageUrl": "https://www.selfbingo.xyz/self-bingo-splash.png",
-    "splashBackgroundColor": "#FCFF52"
-  }
-}
-```
+### Ngrok Development Setup
+For local Self Protocol testing, ngrok is configured:
+\`\`\`bash
+ngrok http 3001 --domain codalabs.ngrok.io
+\`\`\`
 
-### Wagmi Configuration
+Environment variable:
+\`\`\`bash
+NEXT_PUBLIC_SELF_ENDPOINT=https://codalabs.ngrok.io/api/verify-self
+\`\`\`
 
-Supports multiple chains for development and production:
-- **Primary**: Celo Mainnet (42220)
-- **Development**: Celo Alfajores Testnet
-- **Additional**: Base, Base Sepolia, Ethereum Mainnet
+## 🐛 Known Issues
 
-## 🌐 Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy!
-
-**Important**: The app uses standard Next.js output mode (not standalone) for Vercel compatibility.
-
-### Production URL
-
-Live at: [https://www.selfbingo.xyz](https://www.selfbingo.xyz)
-
-## 🧪 Development
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run check` - TypeScript type checking
-
-### Key Features
-
-**Farcaster Detection**: Automatically detects if running as Farcaster mini app or browser app
-
-**Auto-Wallet Connection**: In Farcaster environment, automatically connects user's wallet
-
-**Network Switching**: Automatically switches to Celo mainnet if user is on wrong network
-
-**Responsive Design**: Works on mobile and desktop
-
-## 📝 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_SITE_URL` | Your site URL | Yes |
-| `NEXT_PUBLIC_CHAIN_ID` | Celo chain ID (42220) | Yes |
-| `NEXT_PUBLIC_USDC_ENTRY_FEE` | Entry fee in USDC | Yes |
-| `NEXT_PUBLIC_USDC_CONTRACT_ADDRESS` | USDC contract on Celo | Yes |
-| `NEXT_PUBLIC_SELF_API_URL` | Self Protocol API endpoint | Yes |
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect project ID | Yes |
-| `OPENAI_API_KEY` | OpenAI API key (optional) | No |
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-MIT License - see LICENSE file for details
+- Build warnings during static generation (app works perfectly in production)
+- TypeScript error in verify-self route (userIdentifier property) - does not affect functionality
+- Optional dependency warnings (@react-native-async-storage, pino-pretty) - safe to ignore
 
 ## 🔗 Links
 
@@ -224,11 +188,6 @@ MIT License - see LICENSE file for details
 - **Self Protocol**: [selfprotocol.com](https://selfprotocol.com)
 - **Celo**: [celo.org](https://celo.org)
 - **Farcaster**: [farcaster.xyz](https://farcaster.xyz)
-
-## 🐛 Known Issues
-
-- Build warnings during static generation (app works perfectly in production)
-- Farcaster account association requires manual configuration
 
 ## 📞 Support
 

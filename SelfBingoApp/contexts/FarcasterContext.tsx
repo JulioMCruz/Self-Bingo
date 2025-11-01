@@ -94,8 +94,29 @@ export function FarcasterProvider({ children }: FarcasterProviderProps) {
   }
 
   useEffect(() => {
-    // Auto-authenticate when component mounts
-    signIn()
+    // Check if running in Farcaster Mini App by checking if SDK context is available
+    const checkEnvironment = async () => {
+      try {
+        // Try to access the SDK context
+        const context = await Promise.race([
+          sdk.context,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 100))
+        ])
+
+        if (context) {
+          console.log('🎯 Running in Farcaster Mini App, attempting authentication...')
+          signIn()
+        } else {
+          console.log('🌐 Running in browser, skipping Farcaster authentication')
+          setLoading(false)
+        }
+      } catch (error) {
+        console.log('🌐 Running in browser, skipping Farcaster authentication')
+        setLoading(false)
+      }
+    }
+
+    checkEnvironment()
   }, [])
 
   const isAuthenticated = !!user

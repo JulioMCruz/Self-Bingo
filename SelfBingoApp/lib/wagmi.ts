@@ -2,12 +2,29 @@ import { http, createConfig } from 'wagmi'
 import { celo, celoAlfajores, base, baseSepolia, mainnet } from 'wagmi/chains'
 import { farcasterMiniApp } from '@farcaster/miniapp-wagmi-connector'
 import { walletConnect, injected } from 'wagmi/connectors'
+import type { Chain } from 'viem'
+
+// Celo Sepolia testnet configuration
+export const celoSepolia = {
+  id: 11142220,
+  name: 'Celo Sepolia',
+  nativeCurrency: { name: 'CELO', symbol: 'CELO', decimals: 18 },
+  rpcUrls: {
+    default: { http: [process.env.NEXT_PUBLIC_RPC_URL || 'https://alfajores-forno.celo-testnet.org'] },
+  },
+  blockExplorers: {
+    default: { name: 'Celoscan', url: 'https://sepolia.celoscan.io' },
+  },
+  testnet: true,
+} as const satisfies Chain
 
 // Get chain configuration from environment variables
 const TARGET_CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "42220")
 
 // Select the appropriate chain based on the chain ID
-const targetChain = TARGET_CHAIN_ID === 42220 ? celo : celoAlfajores
+const targetChain = TARGET_CHAIN_ID === 42220 ? celo
+  : TARGET_CHAIN_ID === 11142220 ? celoSepolia
+  : celoAlfajores
 
 // Create transports object with proper typing for all chains
 // Include Base chains since Farcaster wallets often connect to Base by default
@@ -15,6 +32,7 @@ const targetChain = TARGET_CHAIN_ID === 42220 ? celo : celoAlfajores
 const transports = {
   [celo.id]: http(),
   [celoAlfajores.id]: http(),
+  [celoSepolia.id]: http(),
   [base.id]: http(),
   [baseSepolia.id]: http(),
   [mainnet.id]: http(),
@@ -33,20 +51,21 @@ const chainConfig = {
     ...celo,
     rpcUrls: {
       ...celo.rpcUrls,
-      default: { http: [process.env.NEXT_PUBLIC_RPC_URL_CELO || 'https://forno.celo.org'] },
+      default: { http: [process.env.NEXT_PUBLIC_RPC_URL_CELO_MAINNET || 'https://forno.celo.org'] },
     }
   },
   [celoAlfajores.id]: {
     ...celoAlfajores,
     rpcUrls: {
       ...celoAlfajores.rpcUrls,
-      default: { http: [process.env.NEXT_PUBLIC_RPC_URL_CELO_ALFAJORES || 'https://alfajores-forno.celo-testnet.org'] },
+      default: { http: ['https://alfajores-forno.celo-testnet.org'] },
     }
-  }
+  },
+  [celoSepolia.id]: celoSepolia
 }
 
 // Use the chain config for the target chain
-const configuredChain = chainConfig[targetChain.id]
+const configuredChain = chainConfig[targetChain.id] || celoSepolia
 
 // Include all chains to allow switching from Farcaster's default Base network to Celo
 // Include mainnet for ENS resolution

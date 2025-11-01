@@ -22,7 +22,7 @@ export default function WinnerCelebration({ prizeAmount, winnersCount, newGameSt
         <div className="bg-white p-6 border-2 border-black">
           <p className="text-xs font-black uppercase mb-2">YOUR PRIZE</p>
           <p className="text-5xl font-thin" data-testid="text-winner-prize">
-            {amountPerWinner} <span className="text-2xl font-black">USDC</span>
+            {amountPerWinner} <span className="text-2xl font-black">CELO</span>
           </p>
           <p className="text-xs mt-2 uppercase font-bold" data-testid="text-winner-split">
             Split with {winnersCount} {winnersCount === 1 ? 'winner' : 'winners'}

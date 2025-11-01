@@ -13,7 +13,7 @@ export default function PrizePoolHero({ prizePool }: PrizePoolHeroProps) {
           {prizePool.toFixed(2)}
         </h2>
         <span className="text-2xl font-black" data-testid="text-prize-currency">
-          USDC
+          CELO
         </span>
       </div>
     </div>
