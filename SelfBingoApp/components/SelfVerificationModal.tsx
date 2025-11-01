@@ -198,7 +198,7 @@ export default function SelfVerificationModal({
               </div>
 
               <div className="bg-muted/30 p-3 border-2 border-black text-xs">
-                <p className="font-black uppercase mb-1">Don't have the Self app?</p>
+                <p className="font-black uppercase mb-1">Don&apos;t have the Self app?</p>
                 <p>Download it from <a href="https://self.xyz/download" target="_blank" rel="noopener noreferrer" className="underline">self.xyz/download</a></p>
               </div>
 

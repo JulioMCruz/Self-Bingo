@@ -251,14 +251,14 @@ export default function PaymentScreen({
                         <ol className="list-decimal list-inside space-y-1">
                           {isFarcasterMiniApp ? (
                             <>
-                              <li>Click "Verify with Self" to open Self app</li>
-                              <li>Or use "Copy Link" and open in browser</li>
+                              <li>Click &quot;Verify with Self&quot; to open Self app</li>
+                              <li>Or use &quot;Copy Link&quot; and open in browser</li>
                               <li>Complete age verification (18+)</li>
                             </>
                           ) : (
                             <>
                               <li>Scan QR code with Self Protocol app</li>
-                              <li>Or click "Verify with Self" button</li>
+                              <li>Or click &quot;Verify with Self&quot; button</li>
                               <li>Complete age verification (18+)</li>
                             </>
                           )}
@@ -304,7 +304,7 @@ export default function PaymentScreen({
                           <ol className="list-decimal list-inside space-y-1">
                             <li>Confirm transaction in your wallet</li>
                             <li>Wait for blockchain confirmation (usually under 30 seconds)</li>
-                            <li>Don't close this window or refresh the page</li>
+                            <li>Don&apos;t close this window or refresh the page</li>
                           </ol>
                           <p className="mt-2 text-center font-bold animate-pulse">
                             Processing on Celo mainnet...
@@ -318,7 +318,7 @@ export default function PaymentScreen({
                       <div className="p-6 border-2 border-black bg-secondary/20 text-center">
                         <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-secondary" />
                         <p className="text-xs font-black uppercase mb-2">ALREADY JOINED</p>
-                        <p className="text-xs">You're already a player in this game!</p>
+                        <p className="text-xs">You&apos;re already a player in this game!</p>
                       </div>
 
                       <Button
