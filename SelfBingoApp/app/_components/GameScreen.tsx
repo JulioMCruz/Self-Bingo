@@ -9,19 +9,41 @@ interface GameScreenProps {
   onSquareClick: (id: string) => void;
   onCheckWin: () => void;
   prizePool: number;
+  onUpdateSquareState?: (id: string, state: BingoSquareState) => void;
 }
 
-export default function GameScreen({ squares, onSquareClick, onCheckWin, prizePool }: GameScreenProps) {
+export default function GameScreen({ squares, onSquareClick, onCheckWin, prizePool, onUpdateSquareState }: GameScreenProps) {
   const [verificationOpen, setVerificationOpen] = useState(false);
   const [currentChallenge, setCurrentChallenge] = useState('');
+  const [currentSquareId, setCurrentSquareId] = useState('');
 
   const handleSquareClick = (id: string) => {
     const square = squares.find(sq => sq.id === id);
-    if (square && square.state === 'selected') {
+    console.log(`🎯 Square ${id} clicked in GameScreen, state: ${square?.state}`);
+
+    // Open verification modal for default or failed squares
+    if (square && (square.state === 'default' || square.state === 'failed')) {
       setCurrentChallenge(square.question);
+      setCurrentSquareId(id);
       setVerificationOpen(true);
+      console.log(`🔐 Opening verification modal for square ${id}: ${square.question}`);
     }
+
     onSquareClick(id);
+  };
+
+  const handleVerificationSuccess = () => {
+    console.log(`✅ Verification successful for square ${currentSquareId}`);
+    if (onUpdateSquareState) {
+      onUpdateSquareState(currentSquareId, 'verified');
+    }
+  };
+
+  const handleVerificationFailed = (reason?: string) => {
+    console.log(`❌ Verification failed for square ${currentSquareId}:`, reason);
+    if (onUpdateSquareState) {
+      onUpdateSquareState(currentSquareId, 'failed');
+    }
   };
 
   const verifiedCount = squares.filter(sq => sq.state === 'verified').length;
@@ -38,7 +60,7 @@ export default function GameScreen({ squares, onSquareClick, onCheckWin, prizePo
                 <p className="text-2xl font-thin" data-testid="text-game-prize-pool">
                   {prizePool.toFixed(2)}
                 </p>
-                <span className="text-sm font-black">USDC</span>
+                <span className="text-sm font-black">CELO</span>
               </div>
             </div>
           </div>
@@ -76,10 +98,13 @@ export default function GameScreen({ squares, onSquareClick, onCheckWin, prizePo
         </Button>
       </div>
 
-      <VerificationModal 
+      <VerificationModal
         open={verificationOpen}
         onClose={() => setVerificationOpen(false)}
         challenge={currentChallenge}
+        squareId={currentSquareId}
+        onVerificationSuccess={handleVerificationSuccess}
+        onVerificationFailed={handleVerificationFailed}
       />
     </div>
   );

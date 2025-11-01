@@ -32,7 +32,7 @@ export default function StatsGrid({ activeGames, totalWinners, roundNumber }: St
       <StatCard label="ACTIVE GAMES" value={activeGames} />
       <StatCard label="TOTAL WINNERS" value={totalWinners} highlight />
       <StatCard label="ROUND" value={`#${roundNumber}`} />
-      <StatCard label="ENTRY FEE" value="1 USDC" />
+      <StatCard label="ENTRY FEE" value="0.05 CELO" />
     </div>
   );
 }

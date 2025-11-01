@@ -45,7 +45,7 @@ export default function WinnerPage({
             <p className="text-6xl font-thin" data-testid="text-winner-prize">
               {amountPerWinner}
             </p>
-            <span className="text-2xl font-black">USDC</span>
+            <span className="text-2xl font-black">CELO</span>
           </div>
           <p className="text-xs uppercase font-bold" data-testid="text-winner-split">
             Split with {winnersCount} {winnersCount === 1 ? 'winner' : 'winners'}

@@ -26,6 +26,7 @@ export default function Dashboard({
 }: DashboardProps) {
   const { isConnected } = useAccount();
   const [mounted, setMounted] = useState(false);
+  const entryFee = process.env.NEXT_PUBLIC_ENTRY_FEE_CELO || '0.05';
 
   useEffect(() => {
     setMounted(true);
@@ -50,7 +51,7 @@ export default function Dashboard({
                 {prizePool.toFixed(2)}
               </h2>
               <span className="text-xl md:text-2xl font-black" data-testid="text-prize-currency">
-                USDC
+                CELO
               </span>
             </div>
           </div>
@@ -67,7 +68,7 @@ export default function Dashboard({
           <ol className="space-y-3 text-sm">
             <li className="flex gap-3">
               <span className="font-black">1.</span>
-              <span>Pay 0.01 USDC entry fee to get your bingo card</span>
+              <span>Pay {entryFee} CELO entry fee to get your bingo card</span>
             </li>
             <li className="flex gap-3">
               <span className="font-black">2.</span>
@@ -81,6 +82,20 @@ export default function Dashboard({
               <span className="font-black">4.</span>
               <span>Winners split the prize pool equally</span>
             </li>
+            <li className="flex gap-3">
+              <span className="font-black">📝</span>
+              <span>
+                Smart Contract:{' '}
+                <a
+                  href={`https://celoscan.io/address/${process.env.NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-primary transition-colors font-black"
+                >
+                  {process.env.NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS?.slice(0, 6)}...{process.env.NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS?.slice(-4)}
+                </a>
+              </span>
+            </li>
           </ol>
         </div>
 
@@ -90,7 +105,7 @@ export default function Dashboard({
           disabled={!mounted || !isConnected}
           data-testid="button-join-game"
         >
-          {!mounted ? 'Loading...' : isConnected ? 'Join Game - 0.01 USDC' : 'Connect Wallet to Play'}
+          {!mounted ? 'Loading...' : isConnected ? `Join Game - ${entryFee} CELO` : 'Connect Wallet to Play'}
         </Button>
       </div>
     </div>

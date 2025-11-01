@@ -6,6 +6,7 @@ interface BingoSquare {
   id: string;
   question: string;
   state: BingoSquareState;
+  verifierCount?: number; // V3: Number of players who verified this cell
 }
 
 interface BingoCardProps {
@@ -38,14 +39,21 @@ export default function BingoCard({ squares, onSquareClick }: BingoCardProps) {
             <button
               key={square.id}
               onClick={() => !isFreeSpace && onSquareClick(square.id)}
-              disabled={isFreeSpace || square.state === 'verified' || square.state === 'verifying'}
-              className={`aspect-square p-2 border-2 border-black flex items-center justify-center text-center text-xs font-medium leading-tight transition-none ${getSquareClass(square.state)} ${isFreeSpace ? 'cursor-default' : 'cursor-pointer'}`}
+              disabled={isFreeSpace || square.state === 'verifying'}
+              className={`aspect-square p-2 border-2 border-black flex flex-col items-center justify-center text-center text-xs font-medium leading-tight transition-none ${getSquareClass(square.state)} ${isFreeSpace ? 'cursor-default' : 'cursor-pointer'}`}
               data-testid={`button-square-${square.id}`}
             >
               {isFreeSpace ? (
                 <img src={selfLogo.src} alt="Self" className="w-full h-full object-contain p-1" />
               ) : (
-                square.question
+                <>
+                  <span className="flex-1 flex items-center justify-center">{square.question}</span>
+                  {square.verifierCount && square.verifierCount > 0 && (
+                    <span className="mt-1 px-2 py-0.5 bg-black text-white text-[10px] font-black border border-white">
+                      {square.verifierCount} {square.verifierCount === 1 ? 'PLAYER' : 'PLAYERS'}
+                    </span>
+                  )}
+                </>
               )}
             </button>
           );
